@@ -2,9 +2,10 @@ import * as d3 from "d3";
 import { AxisLeft } from "./AxisLeft";
 import { AxisBottom } from "./AxisBottom";
 import { useState } from "react";
-import { InteractionData, Tooltip } from "./Tooltip";
+import { Tooltip } from "./Tooltip";
+import Legend from "./Legend";
 
-const MARGIN = { top: 60, right: 60, bottom: 60, left: 60 };
+const MARGIN = { top: 160, right: 160, bottom: 60, left: 60 };
 
 export const Scatterplot = ({ width, height, data }) => {
   const boundsWidth = width - MARGIN.right - MARGIN.left;
@@ -65,6 +66,16 @@ export const Scatterplot = ({ width, height, data }) => {
           {/* Y axis */}
           <AxisLeft yScale={yScale} pixelsPerTick={40} width={boundsWidth} />
 
+          {/* Y-axis label */}
+          <text
+            transform={`translate(-40,${boundsHeight / 2})rotate(-90)`}
+            textAnchor="middle"
+            fontSize="14"
+            fill="white"
+          >
+            Statistical skills
+          </text>
+
           {/* X axis, use an additional translation to appear at the bottom */}
           <g transform={`translate(0, ${boundsHeight})`}>
             <AxisBottom
@@ -72,10 +83,28 @@ export const Scatterplot = ({ width, height, data }) => {
               pixelsPerTick={40}
               height={boundsHeight}
             />
+
+            {/* X-axis label */}
+            <text
+              transform={`translate(${boundsWidth / 2},40)`}
+              textAnchor="middle"
+              fontSize="14"
+              fill="white"
+            >
+              Programming skills
+            </text>
           </g>
 
           {/* Circles */}
           {allShapes}
+
+          {/* Legend */}
+          <Legend
+            colorScale={colorScale}
+            groups={groups}
+            marginLeft={boundsWidth + 30}
+            marginTop={-MARGIN.top + 160}
+          />
         </g>
       </svg>
 
