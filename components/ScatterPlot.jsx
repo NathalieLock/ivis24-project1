@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { AxisLeft } from "./AxisLeft";
 import { AxisBottom } from "./AxisBottom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tooltip } from "./Tooltip";
 import Legend from "./Legend";
 
@@ -20,44 +20,61 @@ export const Scatterplot = ({ width, height, data }) => {
     "Other",
   ];
 
-  const [hovered, setHovered] = useState(null);
-  const [xAxisAttribute, setXAxisAttribute] = useState("programming");
-  const [yAxisAttribute, setYAxisAttribute] = useState("statistics");
-
-  // Scales
-  const yScale = d3.scaleLinear().domain([0, 10]).range([boundsHeight, 0]);
-  const xScale = d3.scaleLinear().domain([0, 10]).range([0, boundsWidth]);
-
   // Color scale based on groups
   const colorScale = d3
     .scaleOrdinal()
     .domain(groups)
     .range(["#e0ac2b", "#e85252", "#6689c6", "#9a6fb0", "#01A368"]);
 
-  // Build the shapes
-  const allShapes = data.map((d, i) => {
-    return (
-      <circle
-        key={i}
-        r={8}
-        cx={xScale(d.programming)}
-        cy={yScale(d.statistics)}
-        stroke={colorScale(d.major)}
-        fill={colorScale(d.major)}
-        fillOpacity={0.7}
-        onMouseEnter={() =>
-          setHovered({
-            xPos: xScale(d.programming),
-            yPos: yScale(d.statistics),
-            name: d.alias,
-            group: d.major,
-            hobbies: d.hobbies,
-          })
-        }
-        onMouseLeave={() => setHovered(null)}
-      />
-    );
-  });
+  const [hovered, setHovered] = useState(null);
+  const [xAxisAttribute, setXAxisAttribute] = useState("programming");
+  const [yAxisAttribute, setYAxisAttribute] = useState("statistics");
+  const [allShapes, setAllShapes] = useState([]);
+
+  // Scales
+  const yScale = d3.scaleLinear().domain([0, 10]).range([boundsHeight, 0]);
+  const xScale = d3.scaleLinear().domain([0, 10]).range([0, boundsWidth]);
+
+  const updateScales = () => {
+    // Update xScale and yScale based on the selected axes
+    xScale.domain([0, 10]).range([0, boundsWidth]);
+    yScale.domain([0, 10]).range([boundsHeight, 0]);
+  };
+
+  // Update scales when axes change
+  useEffect(() => {
+    updateScales();
+  }, [xAxisAttribute, yAxisAttribute]);
+
+  useEffect(() => {
+    // Rebuild shapes when data changes
+    const updatedShapes = data.map((d, i) => {
+      return (
+        <circle
+          key={i}
+          r={8}
+          cx={xScale(d[xAxisAttribute])}
+          cy={yScale(d[yAxisAttribute])}
+          stroke={colorScale(d.major)}
+          fill={colorScale(d.major)}
+          fillOpacity={0.7}
+          onMouseEnter={() =>
+            setHovered({
+              xPos: xScale(d[xAxisAttribute]),
+              yPos: yScale(d[yAxisAttribute]),
+              name: d.alias,
+              group: d.major,
+              hobbies: d.hobbies,
+            })
+          }
+          onMouseLeave={() => setHovered(null)}
+        />
+      );
+    });
+
+    // Update the state directly
+    setAllShapes(updatedShapes);
+  }, [xAxisAttribute, yAxisAttribute, data]);
 
   return (
     <div>
