@@ -1,10 +1,9 @@
-import React from "react";
-
 const Legend = ({ colorScale, groups, marginLeft, marginTop }) => {
   const circleRadius = 7;
+  const rowHeight = 30; // Adjust this value to set the desired space between rows
 
   const legendItems = groups.map((group, index) => (
-    <g key={group} transform={`translate(0, ${index * 20})`}>
+    <g key={group} transform={`translate(0, ${index * rowHeight})`}>
       <circle
         cx={circleRadius}
         cy={circleRadius}
@@ -14,7 +13,6 @@ const Legend = ({ colorScale, groups, marginLeft, marginTop }) => {
         strokeWidth={2}
       />
       <text
-        className="max-w-[5px] break-words"
         x={2 * circleRadius + 5}
         y={circleRadius + 5}
         fill="white"

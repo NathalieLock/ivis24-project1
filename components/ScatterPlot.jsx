@@ -61,12 +61,12 @@ export const Scatterplot = ({ width, height, data }) => {
 
   return (
     <div>
-      <div className="mt-[30px] text-white">
+      <div className="mt-[60px] ml-[180px] text-white">
         <h3 className="text-xl">What skills are you looking for?</h3>
       </div>
 
       {/* Axis Controls */}
-      <div className="mt-4">
+      <div className="mt-4 ml-[120px]">
         <label className="mr-4">
           Y-Axis:
           <select
@@ -108,9 +108,9 @@ export const Scatterplot = ({ width, height, data }) => {
 
                 {/* Y-axis label */}
                 <text
-                  transform={`translate(-40,${boundsHeight / 2})rotate(-90)`}
+                  transform={`translate(-50,${boundsHeight / 2})rotate(-90)`}
                   textAnchor="middle"
-                  fontSize="14"
+                  fontSize="16"
                   fill="white"
                 >
                   {yAxisAttribute}
@@ -126,9 +126,9 @@ export const Scatterplot = ({ width, height, data }) => {
 
                   {/* X-axis label */}
                   <text
-                    transform={`translate(${boundsWidth / 2},40)`}
+                    transform={`translate(${boundsWidth / 2},50)`}
                     textAnchor="middle"
-                    fontSize="14"
+                    fontSize="16"
                     fill="white"
                   >
                     {xAxisAttribute}
@@ -143,7 +143,7 @@ export const Scatterplot = ({ width, height, data }) => {
                   colorScale={colorScale}
                   groups={groups}
                   marginLeft={boundsWidth + 30}
-                  marginTop={-MARGIN.top + 160}
+                  marginTop={-MARGIN.top + 40}
                 />
               </g>
             </svg>
@@ -166,9 +166,9 @@ export const Scatterplot = ({ width, height, data }) => {
           </div>
         </div>
         {/* Sidebar Section */}
-        <div className="w-[35%] mt-40 bg-blue text-white">
+        <div className="w-[35%] bg-blue text-white">
           <h3 className="text-xl">Do they sound interesting?</h3>
-          <div className="w-[600px] h-[400px] border border-gray-800 p-4 mt-2">
+          <div className="w-[500px] h-[400px] border border-gray-800 p-4 mt-2">
             <div className="mb-6">
               <strong>Name:</strong> {hovered ? hovered.name : ""}
             </div>
