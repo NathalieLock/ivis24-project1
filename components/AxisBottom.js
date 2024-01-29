@@ -28,7 +28,7 @@ export const AxisBottom = ({ xScale, pixelsPerTick, height }) => {
           <line
             y1={TICK_LENGTH}
             y2={-height - TICK_LENGTH}
-            stroke="#1e293b"
+            stroke="#334155"
             strokeWidth={0.5}
           />
           <text

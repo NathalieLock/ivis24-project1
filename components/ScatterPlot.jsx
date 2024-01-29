@@ -84,9 +84,8 @@ export const Scatterplot = ({ width, height, data }) => {
       </div>
 
       {/* Axis Controls */}
-      <div className="mt-4 ml-[120px]">
+      <div className="flex mt-4 ml-[180px] gap-x-10">
         <label className="mr-4">
-          Y-Axis:
           <select
             value={yAxisAttribute}
             onChange={(e) => setYAxisAttribute(e.target.value)}
@@ -97,7 +96,6 @@ export const Scatterplot = ({ width, height, data }) => {
           </select>
         </label>
         <label className="mr-4">
-          X-Axis:
           <select
             value={xAxisAttribute}
             onChange={(e) => setXAxisAttribute(e.target.value)}
@@ -184,13 +182,13 @@ export const Scatterplot = ({ width, height, data }) => {
           </div>
         </div>
         {/* Sidebar Section */}
-        <div className="w-[35%] bg-blue text-white">
-          <div className="flex">
-            <h3 className="text-xl"> Do they sound interesting?</h3>
+        <div className="w-[35%] bg-blue text-black">
+          <div className="flex text-white">
+            <h3 className="text-xl "> Do they sound interesting?</h3>
             <h1 className="text-s mt-1 ml-2">(Choose a point to find out)</h1>
           </div>
 
-          <div className="w-[500px] h-[400px] border border-gray-800 p-4 mt-2">
+          <div className="w-[500px] h-[400px] bg-slate-100 border border-gray-600 p-4 mt-2">
             <div className="mb-6">
               <strong>Name:</strong> {hovered ? hovered.name : ""}
             </div>

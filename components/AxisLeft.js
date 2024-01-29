@@ -27,7 +27,7 @@ export const AxisLeft = ({ yScale, pixelsPerTick, width }) => {
           <line
             x1={-TICK_LENGTH}
             x2={width + TICK_LENGTH}
-            stroke="#1e293b"
+            stroke="#334155"
             strokeWidth={0.5}
           />
           <text
