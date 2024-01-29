@@ -16,6 +16,7 @@ export const Scatterplot = ({ width, height, data }) => {
     "Computer Science",
     "Media Technology",
     "Machine Learning",
+    "Human-Computer Interaction",
     "Other",
   ];
 
@@ -29,7 +30,7 @@ export const Scatterplot = ({ width, height, data }) => {
   const colorScale = d3
     .scaleOrdinal()
     .domain(groups)
-    .range(["#e0ac2b", "#e85252", "#6689c6", "#9a6fb0", "#a53253"]);
+    .range(["#e0ac2b", "#e85252", "#6689c6", "#9a6fb0", "#01A368"]);
 
   // Build the shapes
   const allShapes = data.map((d, i) => {
@@ -48,6 +49,7 @@ export const Scatterplot = ({ width, height, data }) => {
             yPos: yScale(d.statistics),
             name: d.alias,
             group: d.major,
+            hobbies: d.hobbies,
           })
         }
         onMouseLeave={() => setHovered(null)}
@@ -122,6 +124,20 @@ export const Scatterplot = ({ width, height, data }) => {
         }}
       >
         <Tooltip interactionData={hovered} />
+      </div>
+      {/* Sidebar Section */}
+      <div className="max-w-[500px] bg-blue text-white">
+        <h3 className="text-2xl">Additional information</h3>
+        {hovered && (
+          <>
+            <div>
+              <strong>Name:</strong> {hovered.name}
+            </div>
+            <div>
+              <strong>Hobbies:</strong> {hovered.hobbies}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
