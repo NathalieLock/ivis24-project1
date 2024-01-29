@@ -14,6 +14,7 @@ const Legend = ({ colorScale, groups, marginLeft, marginTop }) => {
         strokeWidth={2}
       />
       <text
+        className="max-w-[5px] break-words"
         x={2 * circleRadius + 5}
         y={circleRadius + 5}
         fill="white"

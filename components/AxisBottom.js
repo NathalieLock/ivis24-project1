@@ -28,13 +28,13 @@ export const AxisBottom = ({ xScale, pixelsPerTick, height }) => {
           <line
             y1={TICK_LENGTH}
             y2={-height - TICK_LENGTH}
-            stroke="#D2D7D3"
+            stroke="#1e293b"
             strokeWidth={0.5}
           />
           <text
             key={value}
             style={{
-              fontSize: "10px",
+              fontSize: "14px",
               textAnchor: "middle",
               transform: "translateY(20px)",
               fill: "#D2D7D3",

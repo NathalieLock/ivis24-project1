@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Tooltip } from "./Tooltip";
 import Legend from "./Legend";
 
-const MARGIN = { top: 160, right: 160, bottom: 60, left: 60 };
+const MARGIN = { top: 30, right: 220, bottom: 250, left: 60 };
 
 export const Scatterplot = ({ width, height, data }) => {
   const boundsWidth = width - MARGIN.right - MARGIN.left;
@@ -21,6 +21,8 @@ export const Scatterplot = ({ width, height, data }) => {
   ];
 
   const [hovered, setHovered] = useState(null);
+  const [xAxisAttribute, setXAxisAttribute] = useState("programming");
+  const [yAxisAttribute, setYAxisAttribute] = useState("statistics");
 
   // Scales
   const yScale = d3.scaleLinear().domain([0, 10]).range([boundsHeight, 0]);
@@ -58,86 +60,124 @@ export const Scatterplot = ({ width, height, data }) => {
   });
 
   return (
-    <div style={{ position: "relative" }}>
-      <svg width={width} height={height}>
-        <g
-          width={boundsWidth}
-          height={boundsHeight}
-          transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
-        >
-          {/* Y axis */}
-          <AxisLeft yScale={yScale} pixelsPerTick={40} width={boundsWidth} />
-
-          {/* Y-axis label */}
-          <text
-            transform={`translate(-40,${boundsHeight / 2})rotate(-90)`}
-            textAnchor="middle"
-            fontSize="14"
-            fill="white"
-          >
-            Statistical skills
-          </text>
-
-          {/* X axis, use an additional translation to appear at the bottom */}
-          <g transform={`translate(0, ${boundsHeight})`}>
-            <AxisBottom
-              xScale={xScale}
-              pixelsPerTick={40}
-              height={boundsHeight}
-            />
-
-            {/* X-axis label */}
-            <text
-              transform={`translate(${boundsWidth / 2},40)`}
-              textAnchor="middle"
-              fontSize="14"
-              fill="white"
-            >
-              Programming skills
-            </text>
-          </g>
-
-          {/* Circles */}
-          {allShapes}
-
-          {/* Legend */}
-          <Legend
-            colorScale={colorScale}
-            groups={groups}
-            marginLeft={boundsWidth + 30}
-            marginTop={-MARGIN.top + 160}
-          />
-        </g>
-      </svg>
-
-      {/* Tooltip */}
-      <div
-        style={{
-          width: boundsWidth,
-          height: boundsHeight,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          pointerEvents: "none",
-          marginLeft: MARGIN.left,
-          marginTop: MARGIN.top,
-        }}
-      >
-        <Tooltip interactionData={hovered} />
+    <div>
+      <div className="mt-[30px] text-white">
+        <h3 className="text-xl">What skills are you looking for?</h3>
       </div>
-      {/* Sidebar Section */}
-      <div className="max-w-[500px] bg-blue text-white">
-        <h3 className="text-2xl">Additional information</h3>
-        {hovered && (
-          <>
-            <div>
-              <strong>Name:</strong> {hovered.name}
+
+      {/* Axis Controls */}
+      <div className="mt-4">
+        <label className="mr-4">
+          Y-Axis:
+          <select
+            value={yAxisAttribute}
+            onChange={(e) => setYAxisAttribute(e.target.value)}
+          >
+            <option value="statistics">Statistics</option>
+            <option value="programming">Programming</option>
+            <option value="ux">UX</option>
+          </select>
+        </label>
+        <label className="mr-4">
+          X-Axis:
+          <select
+            value={xAxisAttribute}
+            onChange={(e) => setXAxisAttribute(e.target.value)}
+          >
+            <option value="statistics">Statistics</option>
+            <option value="programming">Programming</option>
+            <option value="ux">UX</option>
+          </select>
+        </label>
+      </div>
+      <div className="w-full flex grid-cols-2 gap-x-28 justify-items-center justify-center">
+        <div>
+          <div style={{ position: "relative" }}>
+            <svg width={width} height={height}>
+              <g
+                width={boundsWidth}
+                height={boundsHeight}
+                transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
+              >
+                {/* Y axis */}
+                <AxisLeft
+                  yScale={yScale}
+                  pixelsPerTick={40}
+                  width={boundsWidth}
+                />
+
+                {/* Y-axis label */}
+                <text
+                  transform={`translate(-40,${boundsHeight / 2})rotate(-90)`}
+                  textAnchor="middle"
+                  fontSize="14"
+                  fill="white"
+                >
+                  {yAxisAttribute}
+                </text>
+
+                {/* X axis, use an additional translation to appear at the bottom */}
+                <g transform={`translate(0, ${boundsHeight})`}>
+                  <AxisBottom
+                    xScale={xScale}
+                    pixelsPerTick={40}
+                    height={boundsHeight}
+                  />
+
+                  {/* X-axis label */}
+                  <text
+                    transform={`translate(${boundsWidth / 2},40)`}
+                    textAnchor="middle"
+                    fontSize="14"
+                    fill="white"
+                  >
+                    {xAxisAttribute}
+                  </text>
+                </g>
+
+                {/* Circles */}
+                {allShapes}
+
+                {/* Legend */}
+                <Legend
+                  colorScale={colorScale}
+                  groups={groups}
+                  marginLeft={boundsWidth + 30}
+                  marginTop={-MARGIN.top + 160}
+                />
+              </g>
+            </svg>
+
+            {/* Tooltip */}
+            <div
+              style={{
+                width: boundsWidth,
+                height: boundsHeight,
+                position: "absolute",
+                top: 0,
+                left: 0,
+                pointerEvents: "none",
+                marginLeft: MARGIN.left,
+                marginTop: MARGIN.top,
+              }}
+            >
+              <Tooltip interactionData={hovered} />
+            </div>
+          </div>
+        </div>
+        {/* Sidebar Section */}
+        <div className="w-[35%] mt-40 bg-blue text-white">
+          <h3 className="text-xl">Do they sound interesting?</h3>
+          <div className="w-[600px] h-[400px] border border-gray-800 p-4 mt-2">
+            <div className="mb-6">
+              <strong>Name:</strong> {hovered ? hovered.name : ""}
             </div>
             <div>
-              <strong>Hobbies:</strong> {hovered.hobbies}
+              <strong>Hobbies & interests:</strong>{" "}
+              {hovered ? hovered.hobbies : ""}
             </div>
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
