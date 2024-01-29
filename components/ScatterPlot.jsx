@@ -65,6 +65,7 @@ export const Scatterplot = ({ width, height, data }) => {
               name: d.alias,
               group: d.major,
               hobbies: d.hobbies,
+              major: d.major,
             })
           }
           onMouseLeave={() => setHovered(null)}
@@ -184,10 +185,17 @@ export const Scatterplot = ({ width, height, data }) => {
         </div>
         {/* Sidebar Section */}
         <div className="w-[35%] bg-blue text-white">
-          <h3 className="text-xl">Do they sound interesting?</h3>
+          <div className="flex">
+            <h3 className="text-xl"> Do they sound interesting?</h3>
+            <h1 className="text-s mt-1 ml-2">(Choose a point to find out)</h1>
+          </div>
+
           <div className="w-[500px] h-[400px] border border-gray-800 p-4 mt-2">
             <div className="mb-6">
               <strong>Name:</strong> {hovered ? hovered.name : ""}
+            </div>
+            <div className="mb-6">
+              <strong>Major:</strong> {hovered ? hovered.major : ""}
             </div>
             <div>
               <strong>Hobbies & interests:</strong>{" "}
