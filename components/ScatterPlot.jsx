@@ -1,4 +1,4 @@
-// The main Scatterplot code is taken from https://www.react-graph-gallery.com/scatter-plot
+// The Scatterplot code is taken from https://www.react-graph-gallery.com/scatter-plot and then refractored some
 
 import * as d3 from "d3";
 import { AxisLeft } from "./AxisLeft";
